@@ -1,3 +1,6 @@
 ##
 *.csv
 .idea
+.DS_Store
+project/
+target/
