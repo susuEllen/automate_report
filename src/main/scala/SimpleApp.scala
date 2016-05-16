@@ -50,7 +50,15 @@ object SimpleApp {
     val dataArrayEval = dataArrayFiltered.filter(_.contains(evalJobName))
     val dataArrayFetch = dataArrayFiltered.filter(_.contains(fetchJobName))
     val dataArrayPubish = dataArrayFiltered.filter(_.contains(publishJobName))
-
+    val dataArrayUnexpected = dataArrayFiltered.filter{ dataStr =>
+      !dataStr.contains(evalJobName) && !dataStr.contains(fetchJobName) && !dataStr.contains(publishJobName)
+    }
+    if (dataArrayUnexpected.isEmpty) {
+      println("No unexpected rows. Awesome!")
+    } else {
+      println(s"Unexpected line count: ${dataArrayUnexpected.length}\n")
+      dataArrayUnexpected.map(println(_))
+    }
     println(s"EvalJobCount: ${dataArrayEval.length}\nFetchJobCount: ${dataArrayFetch.length}\nPublishJobCount: ${dataArrayPubish.length}\n")
     val totalJobCount = dataArrayEval.length + dataArrayFetch.length + dataArrayPubish.length
     println(s"Total Job Count: ${totalJobCount}\t FilteredDataCount: ${dataArrayFiltered.length}")
